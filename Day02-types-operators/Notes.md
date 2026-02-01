@@ -193,4 +193,87 @@ BigDecimal total = price.add(tax);
 - **BigDecimal** avoids precision issues.
 - Be mindful of **logical equality** vs **reference equality**.
 
+
+# Interview Prep
+
+### Core Questions
+
+#### 1. What is the difference between primitive and reference types in Java?
+Primitive types handle simple data like `int`, `boolean`, and `char`, whereas reference types handle complex data like `String`, `objects`, and arrays. Reference types allow the storage and manipulation of more complex data structures.
+
+#### 2. What happens when you cast a double to an int?
+Casting a `double` to an `int` is called Narrowing Typecasting. This process can lead to data or fractional loss as the decimal portion is truncated.  
+**Example:** `System.out.println((int) 9.99); // Output: 9`
+
+#### 3. Why does `Integer.MAX_VALUE + 1` become negative?
+This behavior is due to numeric "wrap-around" that occurs in the 32-bit signed integer system, which behaves like an odometer. Once the value exceeds `Integer.MAX_VALUE` (2^31 - 1), it wraps around to the minimum value (-2^31). This safeguard ensures consistency but can catch developers off guard.
+
+#### 4. What does `==` do for objects vs primitives?
+For primitives, the `==` operator compares actual values. For objects, it compares references, meaning it checks whether two objects point to the same memory location. Two objects with identical content but different references will return `false` when compared using `==`.
+
+#### 5. Why can’t local variables have default values?
+Local variables are stored on the stack, which is frequently accessed, and uninitialized variables can lead to unsafe or erroneous behavior. To prioritize security over convenience, Java mandates explicit initialization.
+
+---
+
+### Slightly Deeper (Good Signal for Interviews)
+
+#### 6. When would you use BigInteger / BigDecimal instead of int/double?
+- **BigInteger**: Use this when `int` or `long` becomes insufficient for extremely large values, e.g., in scientific calculations.
+- **BigDecimal**: Use if you want high-precision calculations without rounding errors, such as in financial applications where precision is critical.  
+  **Example:** `new BigDecimal("1.00").subtract(new BigDecimal("0.10"))` won't lead to rounding issues unlike `float` or `double`.
+
+#### 7. Explain numeric promotion in an expression like: `byte + byte → ?`
+In Java, when performing arithmetic operations, smaller integer types (`byte`, `short`, `char`) are promoted to `int` before any operation.  
+**Example:** `byte a = 3, b = 4; int result = a + b; // Result is stored as int`
+
+---
+
+### Practice Questions (Today)
+
+#### Easy (5)
+
+1. **What is the output?**
+   - `System.out.println((int) 9.99);`  
+     **Answer:** 9
+   - `System.out.println(5 / 2);`  
+     **Answer:** 2 (Integer division truncates the decimal part)
+   - `System.out.println(5 / 2.0);`  
+     **Answer:** 2.5 (`double` division retains the decimal part)
+   - `System.out.println('A' + 1);`  
+     **Answer:** 66 (The ASCII value of `'A'` is 65, so adding 1 results in 66)
+   - `System.out.println(true && false || true);`  
+     **Answer:** true (Logical AND has higher precedence than OR, so the evaluation is `(true && false) || true`)
+
+2. **Why does `byte b = 127; b++;` behave as it does?**  
+   **Answer:** `byte` has a range of -128 to 127. Incrementing `127` causes it to wrap around to the minimum value (-128) due to overflow.
+
+---
+
+#### Medium (3)
+
+1. Fix this bug: **“String comparison not working”**  
+   **Issue:** Using `==` to compare `Strings` checks for reference equality, not content.  
+   **Fix:** Use the `.equals()` method to compare `String` content.  
+   **Example:**  
+   ```java
+   String s1 = "test";
+   String s2 = new String("test");  
+   System.out.println(s1.equals(s2)); // true
+   ```
+
+2. Predict the output of a mixed-type expression with `int`, `double`, `long`.  
+   **Example:**  
+   ```java
+   System.out.println(10 + 5.5 + 10L);  
+   ```  
+   - **Answer:** 25.5 (`int` → `double`, `long` → `double`, result is `double`)
+
+3. Why does `System.out.println((byte) (130));` behave a certain way?  
+   **Answer:** The range of `byte` is -128 to 127. Casting `130` to `byte` results in overflow, wrapping around to a negative value.  
+   **Output:** -126  
+   (130 - 256 = -126)
+
+---
+
 For further insights, feel free to raise an issue or contribute! 🛠️✨
