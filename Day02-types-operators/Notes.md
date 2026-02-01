@@ -1,124 +1,175 @@
-Data types are divided into two groups:
+# Java Basics and Key Concepts
 
-    Primitive data types - includes byte, short, int, long, float, double, boolean and char
-    Non-primitive data types - such as String, Arrays and Classes
+## Data Types in Java
 
-Data Type 	Description
-byte 	Stores whole numbers from -128 to 127
-short 	Stores whole numbers from -32,768 to 32,767
-int 	Stores whole numbers from -2,147,483,648 to 2,147,483,647
-long 	Stores whole numbers from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
-float 	Stores fractional numbers. Sufficient for storing 6 to 7 decimal digits
-double 	Stores fractional numbers. Sufficient for storing 15 to 16 decimal digits
-boolean 	Stores true or false values
-char 	Stores a single character/letter or ASCII values
+### Primitive vs Non-Primitive Data Types
 
-Data Type 	Default Value (for fields)
-byte 	0
-short 	0
-int 	0
-long 	0L
-float 	0.0f
-double 	0.0d
-char 	'\u0000'
-String (or any object)   	null
-boolean 	false
+- **Primitive data types**: `byte`, `short`, `int`, `long`, `float`, `double`, `boolean`, `char`
+- **Non-primitive data types**: `String`, Arrays, and Classes
 
-Note:Local variables are slightly different; the compiler never assigns a default value to an uninitialized local variable. If you cannot initialize your local variable where it is declared, make sure to assign it a value before you attempt to use it. Accessing an uninitialized local variable will result in a compile-time error.
+### Data Type Description & Default Values
 
+| Data Type    | Description                                                    | Default Value (for fields) |
+|--------------|----------------------------------------------------------------|----------------------------|
+| `byte`       | Whole numbers from -128 to 127                                 | `0`                        |
+| `short`      | Whole numbers from -32,768 to 32,767                           | `0`                        |
+| `int`        | Whole numbers from -2,147,483,648 to 2,147,483,647             | `0`                        |
+| `long`       | Whole numbers from -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 | `0L` |
+| `float`      | Fractional numbers (6-7 decimal digits precision)              | `0.0f`                    |
+| `double`     | Fractional numbers (15-16 decimal digits precision)            | `0.0d`                    |
+| `boolean`    | Represents `true` or `false` values                            | `false`                   |
+| `char`       | A single letter/character (surrounded by single quotes)        | `'\u0000'`                |
+| `String`     | Represents a sequence of characters                            | `null`                    |
 
-You Cannot Change the Type
-Once a variable is declared with a type, it cannot change to another type later in the program,
+> **Note**: Default values are assigned only to fields. Local variables must be initialized explicitly before use, or it will result in a compile-time error.
 
-Note: This rule makes Java safer, because the compiler will stop you if you try to mix up types by mistake.
-If you really need to change between types, you must use type casting or conversion methods
+---
 
+## Key Java Concepts
 
-primitive data types
+### 1️⃣ Primitive vs Reference Types
+- **Primitives**: Store actual values like `int`, `double`, `char`, `boolean`
+- **References**: Store memory locations pointing to objects (e.g., `String`, `Objects`, Arrays)
+- `==` compares:
+  - Values for **primitives**
+  - References for **objects**.
 
-Integer types(byte, short, int and long), flaoting point types(float and double).
-The long data type should end the value with an "L
-The float and double data types can store fractional numbers,should end the value with an "f" for floats and "d" for doubles.
+---
 
+### 2️⃣ Casting & Numeric Promotion
 
-Note: Use float or double?
+#### Widening Casting (automatic)
+Converting smaller types to larger ones (safe, no data loss):
 
-The precision of a floating point value indicates how many digits the value can have after the decimal point. The precision of float is only 6-7 decimal digits, while double variables have a precision of about 16 digits.
+`byte -> short -> char -> int -> long -> float -> double`
 
-Therefore it is safer to use double for most calculations.
+#### Narrowing Casting (manual)
+Converting larger types to smaller ones (can cause data loss, requires casting):
 
-The char data type is used to store a single character. The character must be surrounded by single quotes, like 'A' or 'c':
+`double -> float -> long -> int -> char -> short -> byte`
 
-The String data type is used to store a sequence of characters (text). String values must be surrounded by double quotes:
+> **Example**:
+> ```java
+> int x = (int) 3.14; // narrowing cast (data loss)
+> ```
 
-The String type is so much used and integrated in Java, that some call it "the special ninth type".
+- **Arithmetic Promotions**:
+  - `byte`, `short`, `char` → promoted to `int` during arithmetic.
+  - Casting doesn’t prevent overflow unless done **before** arithmetic.
 
-A String in Java is actually a non-primitive data type, because it refers to an object. The String object has methods that are used to perform certain operations on strings
+---
 
-escape sequence chars:
-The Java programming language also supports a few special escape sequences for char and String literals: \b (backspace), \t (tab), \n (line feed), \f (form feed), \r (carriage return), \" (double quote), \' (single quote), and \\ (backslash)
+### 3️⃣ Integer Overflow & Wraparound
+- Java uses **fixed-width two’s complement**, so:
+  - Overflow wraps silently (doesn’t throw exceptions).
+  - Example:
+    ```java
+    int x = Integer.MAX_VALUE + 1; // wraparound to Integer.MIN_VALUE
+    ```
+  - Alternative:
+    ```java
+    int safeResult = Math.addExact(a, b); // throws ArithmeticException on overflows
+    ```
 
-Heading:Java Type Casting
+---
 
-Type casting means converting one data type into another. For example, turning an int into a double.
+### 4️⃣ `char` is Numeric
+- `char` stores Unicode values.
+- Promoted to `int` during arithmetic.
+  ```java
+  System.out.println('A' + 1); // Outputs 66
+  ```
 
-In Java, there are two main types of casting:
+---
 
-    Widening Casting (automatic) - converting a smaller type to a larger type size - no chance of data loss
-    byte -> short -> char -> int -> long -> float -> double
+### 5️⃣ Operators Overview
 
-    Narrowing Casting (manual) - converting a larger type to a smaller type size - chances of data loss - use () is compulsury
-    double -> float -> long -> int -> char -> short -> byte 
+#### Arithmetic Operators
+| Operator | Name         | Example    | Description                  |
+|----------|--------------|------------|------------------------------|
+| `+`      | Addition     | `x + y`    | Adds two values              |
+| `-`      | Subtraction  | `x - y`    | Subtracts one value from another |
+| `*`      | Multiplication| `x * y`   | Multiplies two values        |
+| `/`      | Division     | `x / y`    | Divides one value by another |
+| `%`      | Modulus      | `x % y`    | Returns division remainder   |
 
-    Arithmetic Operators
+#### Assignment Operators
+| Operator | Example | Equivalent to |
+|----------|---------|---------------|
+| `+=`     | `x += y`| `x = x + y`   |
+| `-=`     | `x -= y`| `x = x - y`   |
+| `*=`     | `x *= y`| `x = x * y`   |
 
-Arithmetic operators are used to perform common mathematical operations.
-Operator 	Name 	Description 	Example 	
-+ 	Addition 	Adds together two values 	x + y 	
-- 	Subtraction 	Subtracts one value from another 	x - y 	
-* 	Multiplication 	Multiplies two values 	x * y 	
-/ 	Division 	Divides one value by another 	x / y 	
-% 	Modulus 	Returns the division remainder 	x % y 	
-++ 	Increment 	Increases the value of a variable by 1 	++x 	
--- 	Decrement 	Decreases the value of a variable by 1 	--x
+#### Comparison Operators
+| Operator | Name                      | Example     |
+|----------|---------------------------|-------------|
+| `==`     | Equal to                  | `x == y`    |
+| `!=`     | Not equal                 | `x != y`    |
+| `>`      | Greater than              | `x > y`     |
 
-Assignment operators:
-Operator 	Example 	Same As 	
-= 	x = 5 	x = 5 	
-+= 	x += 3 	x = x + 3 	
--= 	x -= 3 	x = x - 3 	
-*= 	x *= 3 	x = x * 3 	
-/= 	x /= 3 	x = x / 3 	
-%= 	x %= 3 	x = x % 3 	
-&= 	x &= 3 	x = x & 3 	
-|= 	x |= 3 	x = x | 3 	
-^= 	x ^= 3 	x = x ^ 3 	
->>= 	x >>= 3 	x = x >> 3 - right shift
-<<= 	x <<= 3 	x = x << 3 -  left shift
+---
 
-comparison operators:
-Operator 	Name 	Example 
-== 	Equal to 	x == y 	
-!= 	Not equal 	x != y 	
-> 	Greater than 	x > y 	
-< 	Less than 	x < y 	
->= 	Greater than or equal to 	x >= y 	
-<= 	Less than or equal to 	x <= y
+### 6️⃣ Special Notes on Strings
+- **Escape Sequences for `char` and `String`**:
+  - `\t` (Tab), `\n` (Newline), `\"` (Double quote), etc.
+- **String Pool**:
+  - String literals are pooled and reused.
+  - `"java" == "java"` → `true` due to pooling.
 
-Logical Operators
-&&  	Logical and 	Returns true if both statements are true 		
-||  	Logical or 	    Returns true if one of the statements is true 	 	
-! 	    Logical not 	Reverse the result, returns false if the result is true
+---
 
-Order of Operations
+## Additional Java Concepts
 
-Here are some common operators, from highest to lowest priority:
+### Memory Model
+- **Stack**: Stores local variables and method calls.
+- **Heap**: Stores objects and arrays.
+- **Garbage Collection**: Cleans unreachable heap objects.
 
-    () - Parentheses
-    *, /, % - Multiplication, Division, Modulus
-    +, - - Addition, Subtraction
-    >, <, >=, <= - Comparison
-    ==, != - Equality
-    && - Logical AND
-    || - Logical OR
-    = - Assignment
+---
+
+### `equals()` vs `==`
+| Used For            | Comparisons       |
+|---------------------|-------------------|
+| `==`                | **Primitives**: Compares values |
+|                     | **Objects**: Compares references |
+| `.equals()`         | Logical/content comparison (can be overridden) |
+
+---
+
+### Handling Decimal Precision
+- **Use `double` cautiously for financial calculations**. It’s better to use:
+  - `BigDecimal`: Precise, eliminates rounding errors.
+  - Example:
+    ```java
+    BigDecimal amount = new BigDecimal("0.1"); // Safer
+    ```
+
+---
+
+## FAQ: Key Practice Questions
+
+### Casting & Overflow
+1. Why is narrowing conversion explicit in Java?
+2. What happens when you cast `double` to `int`?
+3. How can you prevent overflow during arithmetic?
+
+### Equality
+1. Difference between `==` and `.equals()`?
+2. Why is `==` unreliable for comparing objects?
+
+### Memory
+1. Where are Java objects stored?
+2. Why don’t local variables have default values?
+
+### Operators Precedence
+1. Why does `b += 1` work but `b = b + 1` fail for `byte`?
+
+---
+
+## Summary
+1️⃣ Safe Type Casting: Use widening for automatic casting, narrow cautiously (with manual casting).  
+2️⃣ Use `double` for precision but switch to `BigDecimal` when exact values matter.  
+3️⃣ Understand memory allocation (Stack vs Heap) to predict object lifecycles.  
+4️⃣ Use `.equals()` for logical equality between objects.  
+
+For further explanation, feel free to open an issue or refer to Java documentation! 🩵
