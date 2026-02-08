@@ -1,9 +1,0 @@
- Recommended Reading Order
-
-INDEX.txt - Understand the package (5 min)
-QUICK_START.txt - Get visual overview (15 min)
-ArraysCompleteLearningGuide.md PART 1 - Learn theory (1 hour)
-ArraysCompleteLearningGuide.md PART 2 - See implementations (1.5 hours)
-ArrayToolkit.java - Run professional code (15 min)
-ArrayInterviewQuestions.md - Practice Q&A (2 hours)
-ArrayLearningRoadmap.md - Follow daily schedule (ongoing)
