@@ -12,7 +12,7 @@ In Java, String is:
 ```java
 String s = "hello";
 ```
-Creates a String object `"hello"`.
+Creates a String object "hello".
 
 ---
 
@@ -26,8 +26,8 @@ Once a String object is created, its value **cannot be changed**.
 String s = "Hi";
 s = s + "!";
 ```
-This does **NOT** change `"Hi"`.  
-It creates a **new object** `"Hi!"`.
+This does **NOT** change "Hi".  
+It creates a **new object** "Hi!".
 
 ### Memory View
 ```
@@ -252,6 +252,86 @@ StringBuilder sb = new StringBuilder();
 - Longest palindrome substring
 - KMP pattern match
 - Group anagrams
+
+---
+
+## 📊 Method Reference Tables
+
+### TABLE 1: Common Methods Across All Three
+
+| Method | String | StringBuilder | StringBuffer | Purpose |
+|--------|--------|--------------|--------------|---------|
+| `length()` | ✓ | ✓ | ✓ | Get number of characters |
+| `charAt(index)` | ✓ | ✓ | ✓ | Get character at position |
+| `substring(start, end)` | ✓ | ✓ | ✓ | Extract portion of text |
+| `indexOf(String)` | ✓ | ✓ | ✓ | Find position of substring |
+| `contains(String)` | ✓ | ✓ | ✓ | Check if substring exists |
+| `toString()` | ✓ | ✓ | ✓ | Convert to String |
+| `toUpperCase()` | ✓ | ✓ | ✓ | Convert to uppercase |
+| `toLowerCase()` | ✓ | ✓ | ✓ | Convert to lowercase |
+| `trim()` | ✓ | ✓ | ✓ | Remove whitespace |
+| `replace(char, char)` | ✓ | ✓ | ✓ | Replace characters |
+| `equals(String)` | ✓ | ✓ | ✓ | Compare content |
+
+---
+
+### TABLE 2: Most Used Methods (Practical Daily Use)
+
+| Method | String | StringBuilder | StringBuffer | When to Use |
+|--------|--------|--------------|--------------|-------------|
+| `length()` | ✓ | ✓ | ✓ | Check size of text |
+| `substring()` | ✓ | ✓ | ✓ | Extract part of string |
+| `equals()` | ✓ | ✓ | ✓ | Compare two strings |
+| `toUpperCase()` | ✓ | ✓ | ✓ | Convert case |
+| `toLowerCase()` | ✓ | ✓ | ✓ | Convert case |
+| `contains()` | ✓ | ✓ | ✓ | Check if text exists |
+| `split()` | ✓ | ✓ | ✓ | Break into pieces |
+| `trim()` | ✓ | ✓ | ✓ | Remove spaces |
+| `replace()` | ✓ | ✓ | ✓ | Replace text |
+| `indexOf()` | ✓ | ✓ | ✓ | Find position |
+| `append()` | ❌ | ✓ | ✓ | Add to end (building) |
+| `insert()` | ❌ | ✓ | ✓ | Add at position (building) |
+| `delete()` | ❌ | ✓ | ✓ | Remove section (building) |
+| `reverse()` | ❌ | ✓ | ✓ | Flip string (building) |
+| `charAt()` | ✓ | ✓ | ✓ | Get single character |
+
+---
+
+### Quick Tips for Real-World Coding
+
+**For String**, you'll mostly use:
+- `length()`, `equals()`, `substring()`, `indexOf()`, `contains()`, `split()`, `toLowerCase()`, `toUpperCase()`, `trim()`, `replace()`
+
+**For StringBuilder**, you'll mostly use:
+- `append()`, `insert()`, `delete()`, `reverse()`, `toString()`, `length()`, `charAt()`
+
+**For StringBuffer**:
+- Same as StringBuilder, but you almost never use it in modern Java.
+
+---
+
+## 💡 Practical Example: Combining All Three
+
+```java
+// STRING - reading and checking
+String originalText = "Hello World Java";
+int len = originalText.length();              // 16
+boolean hasJava = originalText.contains("Java");  // true
+String upper = originalText.toUpperCase();    // HELLO WORLD JAVA
+
+// STRINGBUILDER - building text
+StringBuilder sb = new StringBuilder();
+sb.append("Hello");
+sb.append(" ");
+sb.append("World");
+String built = sb.toString();                 // Hello World
+
+// Building with modifications
+StringBuilder sb2 = new StringBuilder("Java");
+sb2.insert(0, "Learn ");                      // Learn Java
+sb2.append(" Now");                           // Learn Java Now
+String finalText = sb2.toString();            // Learn Java Now
+```
 
 ---
 
